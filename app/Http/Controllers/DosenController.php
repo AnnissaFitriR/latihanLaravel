@@ -22,7 +22,7 @@ class DosenController extends Controller
     // Edit
     public function edit($id)
     {
-        $mhs = Dosen::findOrFail($id);
+        $dosen = Dosen::findOrFail($id);
         return view('dosen.edit', compact('dosen'));
     }
 
@@ -35,8 +35,8 @@ class DosenController extends Controller
             'matkul' => 'required'
         ]);
 
-        $mhs = Dosen::findOrFail($id);
-        $mhs->update($request->only('nama', 'nim', 'matkul'));
+        $dosen = Dosen::findOrFail($id);
+        $dosen->update($request->only('nama', 'nim', 'matkul'));
 
         return redirect()->route('dosen.index')->with('success','Data berhasil diupdate!');
     }
@@ -44,8 +44,8 @@ class DosenController extends Controller
     // Delete
     public function destroy($id)
     {
-        $mhs = Dosen::findOrFail($id);
-        $mhs->delete();
+        $dosen = Dosen::findOrFail($id);
+        $dosen->delete();
 
         return redirect()->route('dosen.index')->with('success', 'Data berhasil dihapus!');
     }

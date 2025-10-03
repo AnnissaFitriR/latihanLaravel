@@ -21,7 +21,7 @@ class MataKuliahController extends Controller
     // Edit
     public function edit($id)
     {
-        $mhs = MataKuliah::findOrFail($id);
+        $mataKuliah = MataKuliah::findOrFail($id);
         return view('mataKuliah.edit', compact('mataKuliah'));
     }
 
@@ -33,8 +33,8 @@ class MataKuliahController extends Controller
             'deskripsi' => 'required'
         ]);
 
-        $mhs = MataKuliah::findOrFail($id);
-        $mhs->update($request->only('namaMatkul', 'deskripsi'));
+        $mataKuliah = MataKuliah::findOrFail($id);
+        $mataKuliah->update($request->only('namaMatkul', 'deskripsi'));
 
         return redirect()->route('mataKuliah.index')->with('success','Data berhasil diupdate!');
     }
@@ -42,8 +42,8 @@ class MataKuliahController extends Controller
     // Delete
     public function destroy($id)
     {
-        $mhs = MataKuliah::findOrFail($id);
-        $mhs->delete();
+        $mataKuliah = MataKuliah::findOrFail($id);
+        $mataKuliah->delete();
 
         return redirect()->route('mataKuliah.index')->with('success', 'Data berhasil dihapus!');
     }

@@ -34,7 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
     Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 
-
     // Matkul
     Route::get('/mataKuliah', [MataKuliahController::class, 'index'])->name('mataKuliah.index');
     Route::post('/mataKuliah', [MataKuliahController::class, 'store'])->name('mataKuliah.store');

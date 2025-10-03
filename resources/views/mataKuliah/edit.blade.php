@@ -23,7 +23,6 @@
                                 class="border rounded w-full px-3 py-2">
                     </div>
 
-
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Update</button>
                 </form>
             </div>

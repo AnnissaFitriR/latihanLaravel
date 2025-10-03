@@ -22,7 +22,7 @@ class RuanganController extends Controller
     // Edit
     public function edit($id)
     {
-        $mhs = Ruangan::findOrFail($id);
+        $ruangan = Ruangan::findOrFail($id);
         return view('ruangan.edit', compact('ruangan'));
     }
 
@@ -34,8 +34,8 @@ class RuanganController extends Controller
             'kapasitas' => 'required'
         ]);
 
-        $mhs = Ruangan::findOrFail($id);
-        $mhs->update($request->only('nama', 'kapasitas'));
+        $ruangan = Ruangan::findOrFail($id);
+        $ruangan->update($request->only('nama', 'kapasitas'));
 
         return redirect()->route('ruangan.index')->with('success','Data berhasil diupdate!');
     }
@@ -43,8 +43,8 @@ class RuanganController extends Controller
     // Delete
     public function destroy($id)
     {
-        $mhs = Ruangan::findOrFail($id);
-        $mhs->delete();
+        $ruangan = Ruangan::findOrFail($id);
+        $ruangan->delete();
 
         return redirect()->route('ruangan.index')->with('success', 'Data berhasil dihapus!');
     }
