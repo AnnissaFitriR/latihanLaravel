@@ -3,41 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        $data = Mahasiswa::all();
-        return view('mahasiswa.index', compact('data'));
+        // $data = Mahasiswa::all();
+        // return view('mahasiswa.index', compact('data'));
+
+        $data = Mahasiswa::with('kelas')->get();
+        $kelas = Kelas::all();
+        return view('mahasiswa.index', compact('data','kelas'));
     }
 
     public function store(Request $request)
     {
-        Mahasiswa::create($request->only('nama', 'nim'));
-        return redirect()->back();
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:50|unique:mahasiswa,nim',
+            'kelas_id' => 'required|exists:kelas,id',
+        ]);
+
+        Mahasiswa::create([
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'kelas_id' => $request->kelas_id,
+        ]);
+
+        return redirect()->back()->with('succsess', 'Data mahasiswa berhasil ditambahkan');
     }
 
     // Edit
     public function edit($id)
     {
-        $mhs = Mahasiswa::findOrFail($id);
-        return view('mahasiswa.edit', compact('mhs'));
+    $mhs = Mahasiswa::findOrFail($id);
+    $kelas = Kelas::all();
+    return view('mahasiswa.edit', compact('mhs', 'kelas'));
     }
 
     // Update
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama' => 'required',
-            'nim' => 'required'
-        ]);
+    $request->validate([
+        'nama' => 'required',
+        'nim'  => 'required',
+        'kelas_id' => 'required|exists:kelas,id',
+    ]);
 
-        $mhs = Mahasiswa::findOrFail($id);
-        $mhs->update($request->only('nama', 'nim'));
+    $mhs = Mahasiswa::findOrFail($id);
+    $mhs->update($request->only('nama', 'nim', 'kelas_id'));
 
-        return redirect()->route('mahasiswa.index')->with('success','Data berhasil diupdate!');
+    return redirect()->route('mahasiswa.index')
+                     ->with('success', 'Data berhasil diupdate!');
     }
 
     // Delete

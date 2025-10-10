@@ -22,6 +22,17 @@
                         <input type="text" name="nim" value="{{ old('nim', $mhs->nim) }}"
                                 class="border rounded w-full px-3 py-2">
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-white">Kelas</label>
+                        <select name="kelas_id" class="border rounded w-full px-3 py-2">
+                            <option value="">-- Pilih Kelas --</option>
+                        @foreach($kelas as $kls)
+                            <option value="{{ $kls->id }}" {{ $mhs->kelas_id == $kls->id ? 'selected' : '' }}>
+                            {{ $kls->nama_kelas }}
+                            </option>
+                        @endforeach
+                        </select>
+                    </div>
 
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Update</button>
                 </form>

@@ -6,6 +6,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\DosenController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\StudentRegisterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,6 +53,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('ruangan', RuanganController::class);
     Route::resource('mataKuliah', MataKuliahController::class);
     Route::resource('dosen', DosenController::class);
+
+    // Student Register
+    Route::get('/register-mahasiswa', [StudentRegisterController::class, 'showRegistrationForm'])
+    ->name('register.mahasiswa');
+
+    Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register']);
 });
 
 require __DIR__.'/auth.php';
