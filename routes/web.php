@@ -7,6 +7,7 @@ use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\DosenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\StudentRegisterController;
+use App\Http\Controllers\EkycController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,6 +60,21 @@ Route::middleware('auth')->group(function () {
     ->name('register.mahasiswa');
 
     Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register']);
+
+    // Ekyc Controller
+    // Step 1
+    Route::middleware(['auth'])->prefix('ekyc')->group(function () {
+        Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
+        Route::post('step1', [EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
+
+    // Step 2
+    Route::get('/ekyc/step2', [EkycController::class, 'step2'])->name('ekyc.step2');
+    Route::post('/ekyc/step2', [EkycController::class, 'storeStep2'])->name('ekyc.storeStep2');
+
+    // Step 3
+    Route::get('/ekyc/step3', [EkycController::class, 'showStep3'])->name('ekyc.step3');
+    Route::post('/ekyc/step3', [EkycController::class, 'storeStep3'])->name('ekyc.storeStep3');
+    });
 });
 
 require __DIR__.'/auth.php';
