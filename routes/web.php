@@ -8,6 +8,8 @@ use App\Http\Controllers\DosenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\StudentRegisterController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\Admin\EkycAdminController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,10 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('dosen.update');
     Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('dosen.destroy');
 
-
     Route::resource('ruangan', RuanganController::class);
     Route::resource('mataKuliah', MataKuliahController::class);
     Route::resource('dosen', DosenController::class);
+
+    // Admin Route
+    Route::prefix('admin')->group(function () {
+    Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
+    Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
+    Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
 
     // Student Register
     Route::get('/register-mahasiswa', [StudentRegisterController::class, 'showRegistrationForm'])
@@ -74,7 +82,13 @@ Route::middleware('auth')->group(function () {
     // Step 3
     Route::get('/ekyc/step3', [EkycController::class, 'showStep3'])->name('ekyc.step3');
     Route::post('/ekyc/step3', [EkycController::class, 'storeStep3'])->name('ekyc.storeStep3');
+
+    // Step 4
+    Route::get('/ekyc/step4', [EkycController::class, 'showStep4'])->name('ekyc.step4');
+    Route::post('/ekyc/step4', [EkycController::class, 'storeStep4'])->name('ekyc.storeStep4');
+
+    // Step 5
+    Route::get('/ekyc/step5', [EkycController::class, 'step5'])->name('ekyc.step5');
     });
 });
-
 require __DIR__.'/auth.php';

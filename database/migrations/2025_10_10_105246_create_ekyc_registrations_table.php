@@ -22,6 +22,13 @@ return new class extends Migration
             $table->string('file_kk')->nullable();
             $table->string('file_ijazah')->nullable();
             $table->string('file_selfie')->nullable();
+            $table->string('domisili')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kode_pos', 6)->nullable();
+            $table->string('nama_ibu_kandung')->nullable();
+            $table->string('referensi_sumber')->nullable();
             $table->enum('status', ['draft', 'submitted'])->default('draft');
             $table->timestamps();
 
